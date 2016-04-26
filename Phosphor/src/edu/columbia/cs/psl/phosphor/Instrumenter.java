@@ -53,7 +53,6 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
 import edu.columbia.cs.psl.phosphor.runtime.Tainter;
-import edu.columbia.cs.psl.phosphor.struct.CallGraph;
 import edu.columbia.cs.psl.phosphor.struct.MethodInformation;
 import edu.columbia.cs.psl.phosphor.struct.MiniClassNode;
 
@@ -382,24 +381,6 @@ public class Instrumenter {
 				n = 0;
 				int size = SelectiveInstrumentationManager.methodsToInstrument.size();
 				_main(line.getArgs());
-//				for (String clazz : SelectiveInstrumentationManager.methodsToInstrumentByClass.keySet()) {
-//					Set<String> supers = ClassHierarchyCreator.allSupers(clazz);
-//					for (String s : supers) {
-//						ClassNode cn = allClasses.get(s);
-//						if (cn != null) {
-//							for (String meth : SelectiveInstrumentationManager.methodsToInstrumentByClass.get(clazz)) {
-//								for (Object o: cn.methods) {
-//									MethodNode mn = (MethodNode) o;
-//									if (meth.equals(mn.name + mn.desc)) {
-//										MethodDescriptor d = new MethodDescriptor(mn.name, cn.name, mn.desc);
-//										if (!SelectiveInstrumentationManager.methodsToInstrument.contains(d))
-//											SelectiveInstrumentationManager.methodsToInstrument.add(d);
-//									}
-//								}
-//							}
-//						}
-//					}
-//				}
 				int size_new = SelectiveInstrumentationManager.methodsToInstrument.size();
 				if (size == size_new)
 					break;
@@ -438,24 +419,20 @@ public class Instrumenter {
 		try {
 			if (Files.isDirectory(input)) {
 				Files.walkFileTree(input, new FileVisitor<Path>() {
-//					@Override
 					public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
 						return FileVisitResult.CONTINUE;
 					}
 
-//					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 						if (file.getFileName().toString().endsWith(".jar"))
 							urls.add(file.toUri().toURL());
 						return FileVisitResult.CONTINUE;
 					}
 
-//					@Override
 					public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
 						return FileVisitResult.CONTINUE;
 					}
 
-//					@Override
 					public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
 						return FileVisitResult.CONTINUE;
 					}
@@ -585,8 +562,6 @@ public class Instrumenter {
 				} catch (Exception ex) {
 					System.err.println("error copying file " + fi);
 					ex.printStackTrace();
-					//					logger.log(Level.SEVERE, "Unable to copy file " + fi, ex);
-					//					System.exit(-1);
 				} finally {
 					if (source != null) {
 						try {

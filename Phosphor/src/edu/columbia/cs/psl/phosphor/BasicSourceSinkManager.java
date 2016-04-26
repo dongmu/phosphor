@@ -13,7 +13,6 @@ import edu.columbia.cs.psl.phosphor.instrumenter.TaintTrackingClassVisitor;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.ClassNode;
 
-import edu.columbia.cs.psl.phosphor.struct.CallGraph;
 import edu.columbia.cs.psl.phosphor.struct.MiniClassNode;
 
 public class BasicSourceSinkManager extends SourceSinkManager {
